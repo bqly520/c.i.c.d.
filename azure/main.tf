@@ -4,9 +4,6 @@ provider "azurerm" {
   features {}
 }
 
-provider "azuread" {
-}
-
 resource "azurerm_resource_group" "bobo-rg" {
   name     = "${var.prefix}-resources"
   location = var.location
