@@ -64,7 +64,7 @@ resource "azurerm_linux_virtual_machine" "bobo-vm" {
 }
 
 module "network-security-group" {
-  source                = "../modules/terraform-azurerm-network-security-group"
+  source                = "Azure/network-security-group/azurerm"
   resource_group_name   = azurerm_resource_group.bobo-rg.name
   location              = azurerm_resource_group.bobo-rg.location
   security_group_name   = "${var.prefix}-nsg"
