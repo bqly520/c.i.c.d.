@@ -68,7 +68,7 @@ module "network-security-group" {
   resource_group_name   = azurerm_resource_group.bobo-rg.name
   location              = azurerm_resource_group.bobo-rg.location
   security_group_name   = "${var.prefix}-nsg"
-  source_address_prefix = [azurerm_subnet.bobo-subnet.address_prefixes]
+  source_address_prefix = ["10.0.2.0/24"]
 
   custom_rules = [
     {
