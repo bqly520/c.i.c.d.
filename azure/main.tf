@@ -89,8 +89,8 @@ module "network-security-group" {
 
   custom_rules = [
     {
-      name                   = "Deny-all"
-      priority               = 4095
+      name                   = "Deny-all-in"
+      priority               = 4096
       direction              = "Outbound"
       access                 = "Deny"
       protocol               = "*"
@@ -100,7 +100,7 @@ module "network-security-group" {
       description            = "Explicit Deny All Traffic"
     },
     {
-      name                   = "Deny-all"
+      name                   = "Deny-all-out"
       priority               = 4096
       direction              = "Inbound"
       access                 = "Deny"
@@ -111,7 +111,7 @@ module "network-security-group" {
       description            = "Explicit Deny All Traffic"
     },
     {
-      name                   = "Bobo-ssh"
+      name                   = "Bobo-ssh-in"
       priority               = 200
       direction              = "Inbound"
       access                 = "Allow"
