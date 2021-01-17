@@ -62,3 +62,43 @@ resource "azurerm_linux_virtual_machine" "bobo-vm" {
     caching              = "ReadWrite"
   }
 }
+
+module "network-security-group" {
+  source                = "../modules/terraform-azurerm-network-security-group"
+  resource_group_name   = azurerm_resource_group.bobo-rg.name
+  location              = azurerm_resource_group.bobo-rg.location
+  security_group_name   = "${var.prefix}-nsg"
+  source_address_prefix = [azurerm_subnet.bobo-subnet.address_prefixes]
+
+  custom_rules = [
+    {
+      name                   = "myssh"
+      priority               = 201
+      direction              = "Inbound"
+      access                 = "Allow"
+      protocol               = "tcp"
+      source_port_range      = "*"
+      destination_port_range = "22"
+      source_address_prefix  = "10.151.0.0/24"
+      description            = "description-bobossh"
+    },
+    {
+      name                    = "myhttps"
+      priority                = 200
+      direction               = "Inbound"
+      access                  = "Allow"
+      protocol                = "tcp"
+      source_port_range       = "*"
+      destination_port_range  = "443"
+      source_address_prefixes = ["10.151.0.0/24", "10.151.1.0/24"]
+      description             = "description-https"
+    },
+  ]
+
+  tags = {
+    environment = "sandbox"
+    costcenter  = "none"
+  }
+
+  depends_on = [azurerm_resource_group.bobo-rg]
+}
