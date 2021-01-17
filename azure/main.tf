@@ -23,6 +23,17 @@ resource "azurerm_subnet" "bobo-subnet" {
   address_prefixes     = ["10.0.2.0/24"]
 }
 
+resource "azurerm_public_ip" "bobo-pip" {
+  name                = "${var.prefix}-pip"
+  resource_group_name = azurerm_resource_group.bobo-rg.name
+  location            = azurerm_resource_group.bobo-rg.location
+  allocation_method   = "Static"
+
+  tags = {
+    environment = "sandbox"
+  }
+}
+
 resource "azurerm_network_interface" "bobo-nic" {
   name                = "${var.prefix}-nic"
   resource_group_name = azurerm_resource_group.bobo-rg.name
@@ -31,7 +42,8 @@ resource "azurerm_network_interface" "bobo-nic" {
   ip_configuration {
     name                          = "internal"
     subnet_id                     = azurerm_subnet.bobo-subnet.id
-    private_ip_address_allocation = "Dynamic"
+    private_ip_address_allocation = "Static"
+    public_ip_address_id          = azurerm_public_ip.bobo-pip.id
   }
 }
 
@@ -77,27 +89,38 @@ module "network-security-group" {
 
   custom_rules = [
     {
-      name                   = "myssh"
-      priority               = 201
+      name                   = "Deny-all"
+      priority               = 6969
+      direction              = "Outbound"
+      access                 = "Deny"
+      protocol               = "*"
+      source_port_range      = "*"
+      destination_port_range = "*"
+      source_address_prefix  = "*"
+      description            = "Explicit Deny All Traffic"
+    },
+    {
+      name                   = "Deny-all"
+      priority               = 6969
+      direction              = "Inbound"
+      access                 = "Deny"
+      protocol               = "*"
+      source_port_range      = "*"
+      destination_port_range = "*"
+      source_address_prefix  = "*"
+      description            = "Explicit Deny All Traffic"
+    },
+    {
+      name                   = "Bobo-ssh"
+      priority               = 200
       direction              = "Inbound"
       access                 = "Allow"
       protocol               = "tcp"
       source_port_range      = "*"
       destination_port_range = "22"
-      source_address_prefix  = "10.151.0.0/24"
-      description            = "description-bobossh"
-    },
-    {
-      name                    = "myhttps"
-      priority                = 200
-      direction               = "Inbound"
-      access                  = "Allow"
-      protocol                = "tcp"
-      source_port_range       = "*"
-      destination_port_range  = "443"
-      source_address_prefixes = ["10.151.0.0/24", "10.151.1.0/24"]
+      source_address_prefix  = "76.171.45.139"
       destination_address_prefix = "10.0.2.4"
-      description             = "description-https"
+      description            = "Only enabling bobo to SSH"
     },
   ]
 
