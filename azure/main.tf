@@ -47,7 +47,7 @@ resource "azurerm_linux_virtual_machine" "bobo-vm" {
 
   admin_ssh_key {
     username = "bobouser"
-    public_key = file(var.sshpub)
+    public_key = "${var.sshpub}"
   }
 
   source_image_reference {
