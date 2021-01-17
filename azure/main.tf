@@ -42,7 +42,7 @@ resource "azurerm_linux_virtual_machine" "bobo-vm" {
   size                            = "Standard_B1s"
   admin_username                  = "bobouser"
   network_interface_ids = [
-    azurerm_network_interface.main.id,
+    azurerm_network_interface.bobo-nic.id,
   ]
 
   admin_ssh_key {
