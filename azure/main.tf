@@ -90,7 +90,7 @@ module "network-security-group" {
   custom_rules = [
     {
       name                   = "Deny-all"
-      priority               = 4096
+      priority               = 4095
       direction              = "Outbound"
       access                 = "Deny"
       protocol               = "*"
