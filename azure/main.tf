@@ -47,7 +47,7 @@ resource "azurerm_linux_virtual_machine" "bobo-vm" {
 
   admin_ssh_key {
     username = "bobouser"
-    public_key = "${var.sshpub}"
+    public_key = var.sshpub
   }
 
   source_image_reference {
@@ -61,6 +61,11 @@ resource "azurerm_linux_virtual_machine" "bobo-vm" {
     storage_account_type = "Standard_LRS"
     caching              = "ReadWrite"
   }
+}
+
+resource "azurerm_subnet_network_security_group_association" "bobo-nsg-assoc" {
+  subnet_id                 = azurerm_subnet.bobo-subnet.id
+  network_security_group_id = module.network-security-group.network_security_group_id
 }
 
 module "network-security-group" {
@@ -91,6 +96,7 @@ module "network-security-group" {
       source_port_range       = "*"
       destination_port_range  = "443"
       source_address_prefixes = ["10.151.0.0/24", "10.151.1.0/24"]
+      destination_address_prefix = "10.0.2.4"
       description             = "description-https"
     },
   ]
