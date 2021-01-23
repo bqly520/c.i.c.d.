@@ -85,7 +85,8 @@ module "network-security-group" {
   resource_group_name   = azurerm_resource_group.bobo-rg.name
   location              = azurerm_resource_group.bobo-rg.location
   security_group_name   = "${var.prefix}-nsg"
-  source_address_prefix = ["10.0.2.0/24"]
+  source_address_prefix = ["76.171.45.139"]
+  destination_address_prefix = azurerm_public_ip.bobo-pip.ip_address
 
   custom_rules = [
     {
@@ -97,6 +98,7 @@ module "network-security-group" {
       source_port_range      = "*"
       destination_port_range = "*"
       source_address_prefix  = "*"
+      destination_address_prefix = "*"
       description            = "Explicit Deny All Traffic"
     },
     {
@@ -108,6 +110,7 @@ module "network-security-group" {
       source_port_range      = "*"
       destination_port_range = "*"
       source_address_prefix  = "*"
+      destination_address_prefix = "*"
       description            = "Explicit Deny All Traffic"
     },
     {
@@ -118,8 +121,6 @@ module "network-security-group" {
       protocol               = "tcp"
       source_port_range      = "*"
       destination_port_range = "22"
-      source_address_prefix  = "76.171.45.139"
-      destination_address_prefix = "52.183.21.37"
       description            = "Only enabling bobo to SSH"
     },
   ]
