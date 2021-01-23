@@ -90,7 +90,7 @@ module "network-security-group" {
 
   predefined_rules = [
     {
-      name     = "big-Bobo-SSH"
+      name     = "SSH"
       priority = "201"
     }
   ]
