@@ -119,7 +119,7 @@ module "network-security-group" {
       source_port_range      = "*"
       destination_port_range = "22"
       source_address_prefix  = "76.171.45.139"
-      destination_address_prefix = "10.0.2.4"
+      destination_address_prefix = "52.183.21.37"
       description            = "Only enabling bobo to SSH"
     },
   ]
