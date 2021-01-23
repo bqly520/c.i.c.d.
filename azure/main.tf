@@ -86,7 +86,7 @@ module "network-security-group" {
   location              = azurerm_resource_group.bobo-rg.location
   security_group_name   = "${var.prefix}-nsg"
   source_address_prefix = ["76.171.45.139"]
-  destination_address_prefix = [azurerm_public_ip.bobo-pip.ip_address, "10.0.2.4"]
+  destination_address_prefixex = [azurerm_public_ip.bobo-pip.ip_address, "10.0.2.4"]
 
   predefined_rules = [
     {
