@@ -120,6 +120,7 @@ module "network-security-group" {
       access                 = "Allow"
       protocol               = "tcp"
       source_port_range      = "*"
+      source_address_prefix = ["76.171.45.139"]
       destination_port_range = "22"
       description            = "Only enabling bobo to SSH"
     },
