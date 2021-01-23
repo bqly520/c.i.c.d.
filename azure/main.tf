@@ -119,18 +119,7 @@ module "network-security-group" {
       source_address_prefix  = "*"
       destination_address_prefix = "*"
       description            = "Explicit Deny All Traffic"
-    },
-    {
-      name                   = "Bobo-ssh-in"
-      priority               = 200
-      direction              = "Inbound"
-      access                 = "Allow"
-      protocol               = "tcp"
-      source_port_range      = "*"
-      source_address_prefix  = "76.171.45.139"
-      destination_port_range = "22"
-      description            = "Only enabling bobo to SSH"
-    },
+    }
   ]
 
   tags = {
