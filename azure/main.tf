@@ -42,7 +42,7 @@ resource "azurerm_network_interface" "bobo-nic" {
   ip_configuration {
     name                          = "internal"
     subnet_id                     = azurerm_subnet.bobo-subnet.id
-    private_ip_address_allocation = "Static"
+    private_ip_address_allocation = "dynamic"
     public_ip_address_id          = azurerm_public_ip.bobo-pip.id
   }
 }
