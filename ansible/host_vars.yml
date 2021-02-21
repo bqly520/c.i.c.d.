@@ -1,0 +1,6 @@
+---
+all:
+  hosts:
+    bobo:
+      ansible_port: 22
+      ansible_host: 13.66.200.52

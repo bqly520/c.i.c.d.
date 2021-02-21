@@ -1,0 +1,7 @@
+---
+- name: poke webserver
+  hosts: bobo
+  remote_user: root
+
+  tasks:
+  - name: thing to do first in this playbook
