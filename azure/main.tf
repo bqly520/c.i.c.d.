@@ -109,16 +109,28 @@ module "network-security-group" {
       description            = "Explicit Deny All Traffic"
     },
     {
-      name                   = "Allow-internet-out"
+      name                   = "Allow-http-out"
+      priority               = 999
+      direction              = "Outbound"
+      access                 = "Allow"
+      protocol               = "*"
+      source_port_range      = "*"
+      destination_port_range = "80"
+      source_address_prefix  = "10.0.2.4"
+      destination_address_prefix = "Internet"
+      description            = "Allow http out"
+    },
+    {
+      name                   = "Allow-https-out"
       priority               = 1000
       direction              = "Outbound"
       access                 = "Allow"
       protocol               = "*"
       source_port_range      = "*"
-      destination_port_range = ["443", "80"]
+      destination_port_range = "443"
       source_address_prefix  = "10.0.2.4"
       destination_address_prefix = "Internet"
-      description            = "Allow To Internet"
+      description            = "Allow https out"
     },
     {
       name                   = "Deny-all-out"
