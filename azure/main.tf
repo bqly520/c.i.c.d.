@@ -143,6 +143,16 @@ module "network-security-group" {
       source_address_prefix  = "10.0.2.4"
       destination_address_prefix = "Internet"
       description            = "Allow https out"
+    },
+    {
+      name                   = "Allow-jenkins-in"
+      priority               = 1000
+      direction              = "inbound"
+      access                 = "Allow"
+      protocol               = "*"
+      source_port_range      = "*"
+      destination_port_range = "8080"
+      description            = "Allow to Jenkins"
     }
   ]
 
