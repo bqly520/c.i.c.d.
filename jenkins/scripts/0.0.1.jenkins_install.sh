@@ -1,6 +1,6 @@
 # docs: https://www.jenkins.io/doc/book/installing/linux/
 # ssh into the box somehow
-ssh -i <private_key> <user>@<vm_pip
+ssh -i <private_key> <user>@<vm_pip>
 
 # lets install java first
 sudo apt-get update -y
@@ -12,3 +12,9 @@ wget -q -O - https://pkg.jenkins.io/debian-stable/jenkins.io.key | sudo apt-key 
 sudo sh -c 'echo deb https://pkg.jenkins.io/debian-stable binary/ > /etc/apt/sources.list.d/jenkins.list'
 sudo apt-get update -y
 sudo apt-get install jenkins -y
+
+# Unlocking Jenkins/Console
+http://<vm_pip>:8080 
+
+# this password is also the password for "admin"
+sudo cat /var/lib/jenkins/secrets/initialAdminPassword
