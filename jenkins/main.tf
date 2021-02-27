@@ -5,12 +5,13 @@ resource "null_resource" "example1" {
   # move bash script to Jenkins
   provisioner "file" {
     source      = "scripts/0.0.0.beta_test.sh"
-    destination = ""
+    destination = "/tmp/"
 
     connection {
       type     = "ssh"
-      user     = "Administrator"
-      private_key = ""
+      user     = "root"
+      private_key = var.ssh_private_key
+      host     = var.host_ip
     }
   }
 
