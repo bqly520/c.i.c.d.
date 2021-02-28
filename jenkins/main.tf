@@ -11,7 +11,7 @@ resource "null_resource" "example1" {
       type     = "ssh"
       user     = "bobouser"
       #private_key = file("path_to_privatekey")
-      private_key = var.ssh_private_key
+      private_key = "${var.ssh_private_key}"
       host     = var.host_ip
     }
   }
@@ -26,7 +26,7 @@ resource "null_resource" "example1" {
     connection {
       type     = "ssh"
       user     = "bobouser"
-      private_key = var.ssh_private_key
+      private_key = "${var.ssh_private_key}"
       host     = var.host_ip
     }
   }
