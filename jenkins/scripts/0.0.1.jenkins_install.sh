@@ -10,7 +10,9 @@ sudo sh -c 'echo deb https://pkg.jenkins.io/debian-stable binary/ > /etc/apt/sou
 sudo apt-get update -y
 sudo apt-get install jenkins -y
 
-# Unlocking Jenkins/Console
-# http://<vm_pip>:8080 
+# Unlocking Jenkins/Console. http://<vm_pip>:8080 
 # this password is also the password for "admin", may need sleep()
+sleep 10
+jenkinsurl=`curl ipinfo.io/ip`
+echo "Please visit http://${jenkinsurl}:8080 to complete setup"
 sudo cat /var/lib/jenkins/secrets/initialAdminPassword
