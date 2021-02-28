@@ -4,31 +4,30 @@ resource "null_resource" "example1" {
 
   # move bash script to Jenkins
   provisioner "file" {
-    source      = "scripts/0.0.0.beta_test.sh"
-    destination = "/tmp/"
+    source      = "scripts/0.0.1.jenkins_install.sh"
+    destination = "~/0.0.1.jenkins_install.sh"
 
     connection {
       type     = "ssh"
-      user     = "root"
+      user     = "bobouser"
+      #private_key = file("path_to_privatekey")
       private_key = var.ssh_private_key
       host     = var.host_ip
     }
   }
 
-  # execute bash script to configure Jenkins
-  # provisioner "remote-exec" {
-  #   inline = [
-  #     "chmod +x /tmp/*sh",
-  #     "sudo /tmp/system_setup.sh",
-  #     "sudo /tmp/install_docker.sh",
-  #     "sudo /tmp/install_kubernetes_packages.sh",
-  #     "sudo /tmp/kubeadm_init.sh",
-  #     "tail -n2 /tmp/kubeadm_init_output.txt | head -n 1",
-  #   ]
-  #   connection {
-  #     type        = ""
-  #     user        = ""
-  #     private_key = ""
-  #   }
-  # }
+  execute bash script to configure Jenkins
+  provisioner "remote-exec" {
+    inline = [
+      "sudo chmod +x /tmp/*sh",
+      "sudo chmod +x ~/0.0.1.jenkins_install.sh",
+      "sudo /bin/sh ~/0.0.1.jenkins_install.sh",
+    ]
+    connection {
+      type     = "ssh"
+      user     = "bobouser"
+      private_key = var.ssh_private_key
+      host     = var.host_ip
+    }
+  }
 }
