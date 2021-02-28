@@ -11,8 +11,8 @@ sudo apt-get update -y
 sudo apt-get install jenkins -y
 
 # Unlocking Jenkins/Console. http://<vm_pip>:8080 
-# this password is also the password for "admin", may need sleep()
-sleep 10
+# this password is also the password for "admin", sleep until file admin password exist
+while [ ! -f /var/lib/jenkins/secrets/initialAdminPassword ]; do sleep 1; done
 jenkinsurl=`curl ipinfo.io/ip`
 echo "Please visit http://${jenkinsurl}:8080 to complete setup"
 sudo cat /var/lib/jenkins/secrets/initialAdminPassword
