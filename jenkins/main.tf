@@ -1,6 +1,16 @@
 # this file is used to call the jenkins install script
 
-resource "null_resource" "example1" {
+data "terraform_remote_state" "c_i_c_d" {
+  backend = "remote"
+  config = {
+    organization = "c-i-c-d"
+    workspaces = {
+      name = "azure"
+    }
+  }
+}
+
+resource "null_resource" "jenkins_configure" {
 
   # move bash script to Jenkins
   provisioner "file" {
@@ -10,9 +20,8 @@ resource "null_resource" "example1" {
     connection {
       type     = "ssh"
       user     = "bobouser"
-      #private_key = file("path_to_privatekey")
       private_key = var.ssh_private_key
-      host     = var.host_ip
+      host     = data.terraform_remote_state.c_i_c_d.outputs.jenkins_ip
     }
   }
 
@@ -27,7 +36,7 @@ resource "null_resource" "example1" {
       type     = "ssh"
       user     = "bobouser"
       private_key = var.ssh_private_key
-      host     = var.host_ip
+      host     = data.terraform_remote_state.c_i_c_d.outputs.jenkins_ip
     }
   }
 }
