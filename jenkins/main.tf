@@ -16,7 +16,7 @@ resource "null_resource" "example1" {
     }
   }
 
-  execute bash script to configure Jenkins
+  # execute bash script to configure Jenkins
   provisioner "remote-exec" {
     inline = [
       "sudo chmod +x /tmp/*sh",
