@@ -85,7 +85,7 @@ module "network-security-group" {
   resource_group_name   = azurerm_resource_group.bobo-rg.name
   location              = azurerm_resource_group.bobo-rg.location
   security_group_name   = "${var.prefix}-nsg"
-  source_address_prefix = ["76.171.45.139"]
+  source_address_prefix = ["*"]
   destination_address_prefixes = [azurerm_public_ip.bobo-pip.ip_address, "10.0.2.4"]
 
   predefined_rules = [
@@ -97,7 +97,7 @@ module "network-security-group" {
 
   custom_rules = [
     {
-      name                   = "Deny-all-in"
+      name                   = "Deny-all-out"
       priority               = 4096
       direction              = "Outbound"
       access                 = "Deny"
@@ -109,7 +109,7 @@ module "network-security-group" {
       description            = "Explicit Deny All Traffic"
     },
     {
-      name                   = "Deny-all-out"
+      name                   = "Deny-all-in"
       priority               = 4096
       direction              = "Inbound"
       access                 = "Deny"
