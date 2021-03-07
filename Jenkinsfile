@@ -1,19 +1,19 @@
 pipeline {
     agent any
     stages {
-        stage('Build') {
+        stage('Health Check') {
             steps {
-                echo 'Building..'
+                echo 'Health Checking...'
             }
         }
-        stage('Print Current Path') {
+        stage('Run Ansible-Playbook for minikube install') {
             steps {
-                sh 'pwd'
+                echo 'Building minikube'
             }
         }
-        stage('Deploy') {
+        stage('Validation of deployments') {
             steps {
-                echo 'Deploying....'
+                echo 'Validating...'
             }
         }
     }
