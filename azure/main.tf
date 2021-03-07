@@ -157,7 +157,7 @@ module "network-security-group" {
       source_port_range      = "*"
       destination_port_range = "8080"
       source_address_prefix  = "76.171.45.139"
-      destination_address_prefixes = [azurerm_public_ip.bobo-pip.ip_address, "10.0.2.4"]
+      destination_address_prefixes = [azurerm_public_ip.bobo-pip[0].ip_address, "10.0.2.4"]
       description            = "Allow to Jenkins"
     }
   ]
