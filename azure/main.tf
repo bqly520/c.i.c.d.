@@ -85,13 +85,14 @@ resource "azurerm_subnet_network_security_group_association" "bobo-nsg-assoc" {
 }
 
 module "network-security-group" {
-  count                 = var.node_count
   source                = "Azure/network-security-group/azurerm"
   resource_group_name   = azurerm_resource_group.bobo-rg.name
   location              = azurerm_resource_group.bobo-rg.location
   security_group_name   = "${var.prefix}-nsg"
   #source_address_prefix = ["76.171.45.139"]
-  destination_address_prefixes = [element(azurerm_public_ip.bobo-pip.*.id, count.index), "10.0.2.4"]
+  #destination_address_prefixes = [azurerm_public_ip.bobo-pip[0].ip_address, "10.0.2.4"]
+  destination_address_prefixes = [join(",",azurerm_public_ip.bobo-pip.ip_address), "10.0.2.4","10.0.2.5","10.0.2.6"]
+
 
   predefined_rules = [
     {
