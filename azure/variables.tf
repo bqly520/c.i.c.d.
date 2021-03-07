@@ -1,6 +1,6 @@
 variable "prefix" {
-    type = string
-    default = "bobo"
+  type = string
+  default = "bobo"
 }
 
 variable "location" {
@@ -10,4 +10,9 @@ variable "location" {
 
 variable "sshpub" {
   type = string
+}
+
+variable "node_count" {
+  type = string
+  default = 3
 }

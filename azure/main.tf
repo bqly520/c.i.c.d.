@@ -24,7 +24,8 @@ resource "azurerm_subnet" "bobo-subnet" {
 }
 
 resource "azurerm_public_ip" "bobo-pip" {
-  name                = "${var.prefix}-pip"
+  count               = var.node_count
+  name                = "${var.prefix}-pip-${format("%02d", count.index)}"
   resource_group_name = azurerm_resource_group.bobo-rg.name
   location            = azurerm_resource_group.bobo-rg.location
   allocation_method   = "Static"
@@ -35,7 +36,8 @@ resource "azurerm_public_ip" "bobo-pip" {
 }
 
 resource "azurerm_network_interface" "bobo-nic" {
-  name                = "${var.prefix}-nic"
+  count               = var.node_count
+  name                = "${var.prefix}-nic-${format("%02d", count.index)}"
   resource_group_name = azurerm_resource_group.bobo-rg.name
   location            = azurerm_resource_group.bobo-rg.location
 
@@ -43,19 +45,20 @@ resource "azurerm_network_interface" "bobo-nic" {
     name                          = "internal"
     subnet_id                     = azurerm_subnet.bobo-subnet.id
     private_ip_address_allocation = "dynamic"
-    public_ip_address_id          = azurerm_public_ip.bobo-pip.id
+    #public_ip_address_id         = azurerm_public_ip.bobo-pip.id
+    public_ip_address_id          = element(azurerm_public_ip.bobo-pip.*.id, count.index)
   }
 }
 
 resource "azurerm_linux_virtual_machine" "bobo-vm" {
-  name                            = "${var.prefix}-vm"
+  count                           = var.node_count
+  name                            = "${var.prefix}-vm-${format("%02d", count.index)}"
   resource_group_name             = azurerm_resource_group.bobo-rg.name
   location                        = azurerm_resource_group.bobo-rg.location
   size                            = "Standard_B2s"
   admin_username                  = "bobouser"
-  network_interface_ids = [
-    azurerm_network_interface.bobo-nic.id,
-  ]
+  #network_interface_ids           = [azurerm_network_interface.bobo-nic.id]
+  network_interface_ids           = [element(azurerm_network_interface.bobo-nic.*.id, count.index)]
 
   admin_ssh_key {
     username = "bobouser"
@@ -70,6 +73,7 @@ resource "azurerm_linux_virtual_machine" "bobo-vm" {
   }
 
   os_disk {
+    name                 = "myosdisk-${count.index}"
     storage_account_type = "Standard_LRS"
     caching              = "ReadWrite"
   }
