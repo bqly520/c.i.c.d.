@@ -55,7 +55,7 @@ resource "azurerm_linux_virtual_machine" "bobo-vm" {
   name                            = "${var.prefix}-vm-${format("%02d", count.index)}"
   resource_group_name             = azurerm_resource_group.bobo-rg.name
   location                        = azurerm_resource_group.bobo-rg.location
-  size                            = "Standard_B2s"
+  size                            = "Standard_B1s"
   admin_username                  = "bobouser"
   #network_interface_ids           = [azurerm_network_interface.bobo-nic.id]
   network_interface_ids           = [element(azurerm_network_interface.bobo-nic.*.id, count.index)]
