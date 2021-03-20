@@ -137,7 +137,7 @@ module "network-security-group" {
       protocol               = "*"
       source_port_range      = "*"
       destination_port_range = "80"
-      source_address_prefixes= [azurerm_public_ip.bobo-pip[0].ip_address, "10.0.2.4"]
+      source_address_prefixes= ["10.0.2.4","10.0.2.5","10.0.2.6"]
       destination_address_prefix = "Internet"
       description            = "Allow http out"
     },
@@ -149,7 +149,7 @@ module "network-security-group" {
       protocol               = "*"
       source_port_range      = "*"
       destination_port_range = "443"
-      source_address_prefixes= [azurerm_public_ip.bobo-pip[0].ip_address, "10.0.2.4"]
+      source_address_prefixes= ["10.0.2.4","10.0.2.5","10.0.2.6"]
       destination_address_prefix = "Internet"
       description            = "Allow https out"
     },
@@ -162,7 +162,7 @@ module "network-security-group" {
       source_port_range      = "*"
       destination_port_range = "8080"
       source_address_prefix  = "76.171.45.139"
-      destination_address_prefixes = [azurerm_public_ip.bobo-pip[0].ip_address, "10.0.2.4"]
+      destination_address_prefixes = [azurerm_public_ip.bobo-pip[0].ip_address, "10.0.2.4", "10.0.2.5", "10.0.2.6"]
       description            = "Allow to Jenkins"
     }
   ]
