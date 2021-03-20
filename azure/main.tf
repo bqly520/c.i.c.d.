@@ -137,7 +137,7 @@ module "network-security-group" {
       protocol               = "*"
       source_port_range      = "*"
       destination_port_range = "80"
-      source_address_prefix  = "10.0.2.4"
+      source_address_prefix  = [azurerm_public_ip.bobo-pip[0].ip_address, "10.0.2.4"]
       destination_address_prefix = "Internet"
       description            = "Allow http out"
     },
@@ -149,7 +149,7 @@ module "network-security-group" {
       protocol               = "*"
       source_port_range      = "*"
       destination_port_range = "443"
-      source_address_prefix  = "10.0.2.4"
+      source_address_prefix  = [azurerm_public_ip.bobo-pip[0].ip_address, "10.0.2.4"]
       destination_address_prefix = "Internet"
       description            = "Allow https out"
     },
