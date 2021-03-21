@@ -1,0 +1,11 @@
+---
+# tasks file for myuser
+- name: Create a directory
+  file:
+    path: boboFoldaAnsible
+    state: directory
+
+- name: Moving my binaries to all target nodes
+  copy:
+    src: bobo.txt
+    dest: boboFoldaAnsible

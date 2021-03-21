@@ -1,0 +1,42 @@
+---
+# tasks file for myuser
+- name: Create a directory
+  file:
+    path: ./roles/healthChecks/files/healthFolder
+    state: directory
+
+- name: Creating an empty file
+  file:
+    path: "./roles/healthChecks/files/healthFolder/bobo.txt"
+    state: touch
+
+- name: Creating a file with content
+  copy:
+    dest: "./roles/healthChecks/files/healthFolder/bobo.txt"
+    content: |
+      hello
+      bobo
+
+- name: Moving my binaries to another rolebook
+  copy:
+    src: "./roles/healthChecks/files/healthFolder/bobo.txt"
+    dest: "./roles/vmConfig/files/"
+
+- name: Health check to google.com
+  uri:
+    url: https://google.com
+    method: GET
+    return_content: yes
+
+# https://docs.ansible.com/ansible/latest/collections/ansible/builtin/wait_for_module.html
+- name: Health check on Jenkins server
+  wait_for: 
+    host: 0.0.0.0
+    port: 8080
+    timeout: 1
+
+- name: Health check on VM port 22
+  wait_for: 
+    host: 0.0.0.0
+    port: 22
+    timeout: 1

@@ -1,0 +1,18 @@
+---
+- name: Perform health checks from localhost
+  hosts: localhost # runs on FROM localhost to do health checks on other hosts
+  roles:
+    - healthChecks
+
+# each of these blocks are considered different plays in a playbook
+- name: Run VMConfig role on jenkins node
+  hosts: jenkins
+  remote_user: bobouser
+  roles:
+    - vmConfig
+
+- name: Run VMConfig role on azurevms nodes
+  hosts: azurevms
+  remote_user: bobouser
+  roles:
+    - vmConfig
